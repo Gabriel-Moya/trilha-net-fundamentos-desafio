@@ -23,13 +23,13 @@ namespace DesafioFundamentos.Models
                 Console.WriteLine("Digite a placa do veículo para estacionar:");
                 placa = Console.ReadLine().ToUpper();
                 placaValida = ValidarPlaca(placa);
-                if(!placaValida)
+                if (!placaValida)
                 {
                     Console.WriteLine("Placa inválida, tente novamente!");
                     Console.Clear();
                 }
             } while (!placaValida);
-            
+
             veiculos.Add(placa);
         }
 
@@ -72,7 +72,7 @@ namespace DesafioFundamentos.Models
             if (veiculos.Any())
             {
                 Console.WriteLine("Os veículos estacionados são:");
-                foreach(var veiculo in veiculos)
+                foreach (var veiculo in veiculos)
                 {
                     Console.WriteLine(veiculo);
                 }
@@ -87,9 +87,14 @@ namespace DesafioFundamentos.Models
         {
             if (string.IsNullOrEmpty(placa) || placa.Length > 8) return false;
 
-            var placaValida = new Regex("[a-zA-Z]{3}-[0-9]{4}");
+            var padraoMercosul = new Regex("[a-zA-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}");
+            var padraoAntigo = new Regex("[a-zA-Z]{3}-[0-9]{4}");
 
-            return placaValida.IsMatch(placa);
+            if (padraoAntigo.IsMatch(placa) || padraoMercosul.IsMatch(placa))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
